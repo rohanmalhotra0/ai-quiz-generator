@@ -7,7 +7,7 @@ import type { OutputType } from "@/lib/api";
 function DifficultyBadge({ d }: { d: string }) {
   const colors: Record<string, string> = {
     easy: "bg-emerald-500/20 text-emerald-300",
-    medium: "bg-amber-500/20 text-amber-300",
+    medium: "bg-blue-500/20 text-blue-300",
     hard: "bg-rose-500/20 text-rose-300",
   };
   return (
@@ -60,8 +60,13 @@ export function QuizList({ items }: { items: QuizItem[] }) {
   const [selected, setSelected] = useState<Record<number, string>>({});
   const [revealed, setRevealed] = useState<Set<number>>(new Set());
 
-  const reveal = (i: number) => {
-    setRevealed((prev) => new Set(prev).add(i));
+  const toggleReveal = (i: number) => {
+    setRevealed((prev) => {
+      const next = new Set(prev);
+      if (next.has(i)) next.delete(i);
+      else next.add(i);
+      return next;
+    });
   };
 
   return (
@@ -75,23 +80,60 @@ export function QuizList({ items }: { items: QuizItem[] }) {
           <ul className="space-y-2 mb-4">
             {q.choices.map((choice, j) => (
               <li key={j}>
-                <label className="flex items-center gap-2 cursor-pointer">
+                {(() => {
+                  const isRevealed = revealed.has(i);
+                  const isSelected = selected[i] === choice;
+                  const isCorrect = choice === q.answer;
+                  const rowClass = isRevealed
+                    ? isCorrect
+                      ? "border-emerald-500/40 bg-emerald-500/10"
+                      : isSelected
+                        ? "border-rose-500/40 bg-rose-500/10"
+                        : "border-stone-700 bg-stone-900/20"
+                    : isSelected
+                      ? "border-blue-500/40 bg-blue-500/10"
+                      : "border-stone-700 hover:border-stone-600 bg-stone-900/20";
+                  const textClass = isRevealed
+                    ? isCorrect
+                      ? "text-emerald-300"
+                      : isSelected
+                        ? "text-rose-300"
+                        : "text-stone-200"
+                    : "text-stone-200";
+
+                  return (
+                    <label className={`flex items-center gap-3 cursor-pointer rounded-lg px-3 py-2 border transition-colors ${rowClass}`}>
                   <input
                     type="radio"
                     name={`q-${i}`}
                     checked={selected[i] === choice}
                     onChange={() => setSelected((s) => ({ ...s, [i]: choice }))}
-                    className="text-amber-500 focus:ring-amber-500"
+                    className="text-blue-500 focus:ring-blue-500"
                   />
-                  <span className={selected[i] === choice && revealed.has(i) && choice === q.answer ? "text-emerald-400" : ""}>
-                    {choice}
-                  </span>
+                  <span className={`leading-snug ${textClass}`}>{choice}</span>
                 </label>
+                  );
+                })()}
               </li>
             ))}
           </ul>
           {revealed.has(i) && (
-            <div className="pt-3 border-t border-stone-700">
+            <div className="pt-3 border-t border-stone-700 space-y-2">
+              {selected[i] ? (
+                selected[i] === q.answer ? (
+                  <p className="text-sm text-emerald-300">
+                    <span className="font-medium">Correct.</span>
+                  </p>
+                ) : (
+                  <p className="text-sm text-rose-300">
+                    <span className="font-medium">Incorrect.</span> Correct answer:{" "}
+                    <span className="text-stone-200">{q.answer}</span>
+                  </p>
+                )
+              ) : (
+                <p className="text-sm text-stone-400">No answer selected.</p>
+              )}
+
               <p className="text-sm text-stone-400">
                 <span className="text-stone-300 font-medium">Explanation:</span> {q.explanation}
               </p>
@@ -99,8 +141,8 @@ export function QuizList({ items }: { items: QuizItem[] }) {
           )}
           <button
             type="button"
-            onClick={() => reveal(i)}
-            className="mt-3 text-sm text-amber-400 hover:text-amber-300"
+            onClick={() => toggleReveal(i)}
+            className="mt-3 text-sm text-blue-400 hover:text-blue-300"
           >
             {revealed.has(i) ? "Hide explanation" : "Show explanation"}
           </button>

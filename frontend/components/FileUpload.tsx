@@ -73,7 +73,7 @@ export default function FileUpload({ onUploaded, onError, uploadFile }: FileUplo
       onDragLeave={onDragLeave}
       className={`
         block border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition-colors
-        ${drag ? "border-amber-500 bg-amber-500/10" : "border-stone-600 hover:border-stone-500"}
+        ${drag ? "border-blue-500 bg-blue-500/10" : "border-stone-600 hover:border-stone-500"}
         ${uploading ? "pointer-events-none opacity-70" : ""}
       `}
     >

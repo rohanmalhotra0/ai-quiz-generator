@@ -26,9 +26,9 @@ const config: Config = {
           950: "#1f1e1c",
         },
         brand: {
-          DEFAULT: "#c2410c",
-          light: "#ea580c",
-          dark: "#9a3412",
+          DEFAULT: "#2563eb",
+          light: "#3b82f6",
+          dark: "#1d4ed8",
         },
       },
     },

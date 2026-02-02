@@ -54,7 +54,7 @@ export default function GenerateForm({
               onClick={() => setOutputType(opt.value)}
               className={`
                 px-4 py-2 rounded-lg text-sm font-medium transition-colors
-                ${outputType === opt.value ? "bg-amber-600 text-white" : "bg-stone-800 text-stone-300 hover:bg-stone-700"}
+                ${outputType === opt.value ? "bg-blue-600 text-white" : "bg-stone-800 text-stone-300 hover:bg-stone-700"}
               `}
             >
               {opt.label}
@@ -73,7 +73,7 @@ export default function GenerateForm({
               onClick={() => setDifficulty(opt.value as Difficulty | "")}
               className={`
                 px-4 py-2 rounded-lg text-sm font-medium transition-colors
-                ${difficulty === opt.value ? "bg-amber-600 text-white" : "bg-stone-800 text-stone-300 hover:bg-stone-700"}
+                ${difficulty === opt.value ? "bg-blue-600 text-white" : "bg-stone-800 text-stone-300 hover:bg-stone-700"}
               `}
             >
               {opt.label}
@@ -90,17 +90,24 @@ export default function GenerateForm({
           max={50}
           value={count}
           onChange={(e) => setCount(Number(e.target.value) || 5)}
-          className="w-24 px-3 py-2 rounded-lg bg-stone-800 border border-stone-600 text-stone-100 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
+          className="w-24 px-3 py-2 rounded-lg bg-stone-800 border border-stone-600 text-stone-100 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
         />
       </div>
 
       <button
         type="submit"
         disabled={generating}
-        className="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed font-medium text-white transition-colors"
+        className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed font-medium text-white transition-colors"
       >
         {generating ? "Generating…" : "Generate"}
       </button>
+
+      {generating && (
+        <div className="space-y-2" aria-live="polite">
+          <div className="h-2 rounded-full bg-stone-800 border border-stone-700 indeterminate-bar" />
+          <p className="text-xs text-stone-500">Thinking through your material…</p>
+        </div>
+      )}
     </form>
   );
 }
