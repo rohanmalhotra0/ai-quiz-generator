@@ -1,7 +1,14 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL ||
+  (process.env.NODE_ENV === "development" ? "http://localhost:8000" : "");
 
 function wrapNetworkError(e: unknown): Error {
   const message = e instanceof Error ? e.message : String(e);
+  if (!API_BASE) {
+    return new Error(
+      "Backend URL is not configured. Set NEXT_PUBLIC_API_URL to your hosted FastAPI URL (e.g. https://your-backend.onrender.com)."
+    );
+  }
   if (message === "Failed to fetch" || (e instanceof TypeError && e.message.includes("fetch"))) {
     return new Error(`Cannot reach the backend at ${API_BASE}. Start it with: cd backend && uvicorn app.main:app --reload --app-dir .`);
   }
