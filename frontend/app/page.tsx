@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { GraduationCap } from "lucide-react";
 import FileUpload from "@/components/FileUpload";
 import GenerateForm from "@/components/GenerateForm";
 import ResultsDisplay from "@/components/ResultsDisplay";
@@ -44,7 +45,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-950">
+    <div className="relative min-h-screen bg-stone-950 overflow-x-hidden">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -top-32 left-1/2 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-blue-500/10 blur-3xl" />
         <div className="absolute -bottom-40 right-[-120px] h-[520px] w-[520px] rounded-full bg-indigo-500/10 blur-3xl" />
@@ -54,10 +55,12 @@ export default function Home() {
       <header className="sticky top-0 z-20 border-b border-stone-800/80 bg-stone-950/70 backdrop-blur">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-blue-500/90 to-indigo-500/90 ring-1 ring-white/10" />
+            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-blue-500/90 to-indigo-500/90 ring-1 ring-white/10 grid place-items-center">
+              <GraduationCap className="h-5 w-5 text-white/95" aria-hidden="true" />
+            </div>
             <div>
               <p className="text-stone-100 font-semibold leading-tight">AI Quiz Maker</p>
-              <p className="text-stone-500 text-xs leading-tight">Turn notes into practice—fast.</p>
+              <p className="text-stone-500 text-xs leading-tight">Turn notes into practice questions fast.</p>
             </div>
           </div>
 
@@ -344,7 +347,7 @@ export default function Home() {
                 <div className="p-5 rounded-2xl bg-stone-900/30 border border-stone-800">
                   <p className="text-stone-100 font-medium">Best results</p>
                   <p className="text-stone-500 text-sm mt-2">
-                    Use headings and bullet points in your material—clear structure helps the model pick better concepts.
+                    Use headings and bullet points in your material, a clear structure helps the model pick better concepts.
                   </p>
                 </div>
               </div>
