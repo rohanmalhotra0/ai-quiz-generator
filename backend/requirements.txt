@@ -1,0 +1,14 @@
+# Web
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+python-multipart==0.0.17
+
+# File processing
+pypdf==5.1.0
+
+# AI
+openai==1.57.2
+
+# Validation / types
+pydantic==2.10.3
+pydantic-settings==2.6.1

@@ -1,0 +1,23 @@
+# Env and secrets (never commit)
+backend/.env
+backend/.env.local
+.env
+.env.local
+*.env
+!*.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node / Next
+node_modules/
+.next/
+out/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
